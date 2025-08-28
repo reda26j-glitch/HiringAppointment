@@ -213,11 +213,7 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs-com/3.2.0/email.min.js"></script>
     <script>
-        // Initialize EmailJS - you'll need to replace with your actual keys
-        // emailjs.init("YOUR_USER_ID");
-        
         document.getElementById('careerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -243,32 +239,25 @@
                 return;
             }
             
-            // Show sandbox warning for now
-            showMessage('⚠️ This form is running in a sandboxed environment that blocks external requests. To make this work:\n\n1. Copy this form code to your own website\n2. Or use EmailJS (requires setup)\n3. Or host on a server that can make the Power Automate request', 'error');
-            
-            // Disable button temporarily
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Form Blocked by Sandbox';
-            
-            setTimeout(() => {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Invitation';
-            }, 3000);
-            
-            // The actual Power Automate code (commented out due to sandbox):
-            /*
+            // Disable button and show loading state
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
             messageDiv.style.display = 'none';
             
             try {
+                // Power Automate trigger URL
                 const url = 'https://prod-189.westeurope.logic.azure.com:443/workflows/347163b607d1421fb3dff4ee3f0a3f59/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=O8LabTTFIOJYR3t2L87rkLsW5Sm0RbCvkAf7s1t38Lg';
+                console.log('Using URL:', url);
                 
+                // Prepare the JSON payload
                 const payload = {
                     name: name,
                     email: email
                 };
                 
+                console.log('Sending POST request with payload:', payload);
+                
+                // Make the POST request to Power Automate
                 const response = await fetch(url, {
                     method: 'POST',
                     mode: 'cors',
@@ -279,23 +268,39 @@
                     body: JSON.stringify(payload)
                 });
                 
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
                 if (response.ok) {
+                    const responseData = await response.text();
+                    console.log('Response data:', responseData);
                     showMessage('Success! Your career opportunity invitation has been sent. Please check your email.', 'success');
+                    // Reset form
                     nameInput.value = '';
                     emailInput.value = '';
                 } else {
                     const errorData = await response.text();
+                    console.log('Error response:', errorData);
                     throw new Error(`HTTP error! status: ${response.status} - ${errorData}`);
                 }
                 
             } catch (error) {
                 console.error('Full error details:', error);
-                showMessage(`Error: ${error.message}`, 'error');
+                console.error('Error name:', error.name);
+                console.error('Error message:', error.message);
+                
+                if (error.name === 'TypeError' && (error.message.includes('fetch') || error.message.includes('Failed to fetch'))) {
+                    showMessage('❌ CORS Error: Browser blocked the request. This is a common issue with Power Automate. You may need to add a server proxy or use a different approach.', 'error');
+                } else if (error.message.includes('TriggerRequestMethodNotValid')) {
+                    showMessage('❌ Method Error: Power Automate received wrong HTTP method. Check flow configuration.', 'error');
+                } else {
+                    showMessage(`❌ Error: ${error.message}. Check console for details.`, 'error');
+                }
             } finally {
+                // Re-enable button
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Invitation';
             }
-            */
         });
         
         function showMessage(text, type) {
@@ -303,6 +308,8 @@
             messageDiv.textContent = text;
             messageDiv.className = `message ${type}`;
             messageDiv.style.display = 'block';
+            
+            // Scroll to message if needed
             messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     </script>
