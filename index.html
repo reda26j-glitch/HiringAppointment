@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maestro | Career Opportunity Form</title>
+    <style>
+        /* Basic Resets */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 40px 10px;
+        }
+
+        .form-container {
+            max-width: 580px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .form-content {
+            padding: 50px 50px 40px 50px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 40px 0;
+            font-size: 24px;
+            font-weight: 300;
+            color: #000000;
+            line-height: 1.4;
+            letter-spacing: 1px;
+        }
+
+        .intro-text {
+            margin: 0 0 40px 0;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333333;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #000000;
+            letter-spacing: 0.3px;
+        }
+
+        input[type="text"], 
+        input[type="email"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            color: #333333;
+            background-color: #ffffff;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus, 
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #000000;
+        }
+
+        .submit-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background-color: #000000;
+            color: #ffffff;
+            text-decoration: none;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin: 25px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+        }
+
+        .submit-button:hover {
+            background-color: #333333;
+        }
+
+        .submit-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #f0f9ff;
+            border: 1px solid #0891b2;
+            color: #0c4a6e;
+        }
+
+        .message.error {
+            background-color: #fef2f2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .footer {
+            padding: 30px 40px;
+            background-color: #ffffff;
+            border-top: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .contact-info {
+            font-size: 12px;
+            line-height: 1.8;
+            color: #666666;
+            font-weight: 300;
+        }
+
+        .contact-info p {
+            margin: 0 0 6px 0;
+        }
+
+        .contact-info a {
+            color: #000000;
+            text-decoration: none;
+            border-bottom: 1px solid #cccccc;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 600px) {
+            .form-container {
+                margin: 0 auto;
+                border-radius: 16px;
+            }
+            .form-content {
+                padding: 30px 20px 20px 20px;
+            }
+            .submit-button {
+                width: 100%;
+                max-width: 280px;
+                border-radius: 20px;
+            }
+            .footer {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-content">
+            <h1>CAREER OPPORTUNITY</h1>
+            
+            <div class="intro-text">
+                <p>Join our team at Maestro. Please provide your details below to receive your personalized career opportunity invitation.</p>
+            </div>
+
+            <form id="careerForm">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitBtn">Send Invitation</button>
+            </form>
+
+            <div id="messageDiv" class="message"></div>
+
+            <div style="border-top: 1px solid #f0f0f0; margin: 40px 0 30px 0; padding-top: 30px;">
+                <p style="margin: 0; font-size: 14px; color: #666666;">Your information will be used to send you a personalized career opportunity invitation.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="contact-info">
+                <p>Wittevrouwenstraat 36, 3512 CV Utrecht</p>
+                <p>T: 030-2072271 | M: 06-29425725</p>
+                <p>info@maestro-design.nl</p>
+                <p>
+                    <a href="http://www.maestro-design.nl">maestro-design.nl</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs-com/3.2.0/email.min.js"></script>
+    <script>
+        // Initialize EmailJS - you'll need to replace with your actual keys
+        // emailjs.init("YOUR_USER_ID");
+        
+        document.getElementById('careerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('messageDiv');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            
+            // Get form values
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            
+            // Basic validation
+            if (!name || !email) {
+                showMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Show sandbox warning for now
+            showMessage('⚠️ This form is running in a sandboxed environment that blocks external requests. To make this work:\n\n1. Copy this form code to your own website\n2. Or use EmailJS (requires setup)\n3. Or host on a server that can make the Power Automate request', 'error');
+            
+            // Disable button temporarily
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Form Blocked by Sandbox';
+            
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Invitation';
+            }, 3000);
+            
+            // The actual Power Automate code (commented out due to sandbox):
+            /*
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            messageDiv.style.display = 'none';
+            
+            try {
+                const url = 'https://prod-189.westeurope.logic.azure.com:443/workflows/347163b607d1421fb3dff4ee3f0a3f59/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=O8LabTTFIOJYR3t2L87rkLsW5Sm0RbCvkAf7s1t38Lg';
+                
+                const payload = {
+                    name: name,
+                    email: email
+                };
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    showMessage('Success! Your career opportunity invitation has been sent. Please check your email.', 'success');
+                    nameInput.value = '';
+                    emailInput.value = '';
+                } else {
+                    const errorData = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status} - ${errorData}`);
+                }
+                
+            } catch (error) {
+                console.error('Full error details:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Invitation';
+            }
+            */
+        });
+        
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('messageDiv');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
